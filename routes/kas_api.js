@@ -12,17 +12,20 @@ caver.initKASAPI(process.env.CHAIN_ID, process.env.ACCESS_KEY, process.env.SECRE
 
 app.get("/addWallet", auth, async (req, res) => {
     const account = await caver.kas.wallet.createAccount();
+    console.log(account.address);
+    
     User.findOneAndUpdate({_id: req.user._id},
-      {walletAddress: account.address},
-      (err, user) => {
-        if (err) return res.json({
-          success: false,
-          err
-        })
-        return res.status(200).send({
-          success: true
-        })
+    {walletAddress: account.address},
+    (err, user) => {
+      if (err) return res.json({
+        success: false,
+        err: "실패"
       })
-  })
+      return res.json({
+        success: true,
+        err: "성공"
+      })
+    })
+})
 
 module.exports = app;

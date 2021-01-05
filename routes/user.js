@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const User = require("../models/User.js");
 const auth = require('../middleware/Auth');
-
 //회원 가입 할때 필요한 정보들을 client에서 가져오면
 //그것들을 데이터 베이스에 넣어준다.
 app.post("/register", (req, res) => {
@@ -65,14 +64,13 @@ app.get("/auth", auth , (req, res) => {
 app.get("/logout", auth, (req, res) => {
   User.findOneAndUpdate({_id: req.user._id},
     {token: ""},
-    (err, wallet) => {
+    (err, user) => {
       if (err) return res.json({
         success: false,
         err
       })
       return res.status(200).send({
-        success: true,
-        message: `생성 완료 ${wellet}`
+        success: true
       })
     }
     )
