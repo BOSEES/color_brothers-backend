@@ -76,4 +76,13 @@ app.get("/logout", auth, (req, res) => {
     )
 })
 
+app.get("/wallet", auth, (req, res) => {
+  User.findOne({_id:req.user.id}, (err, wallet) => {
+    if (err) return res.json({
+      error: err
+    });
+    return res.json(wallet);
+  })
+})
+
 module.exports = app;
